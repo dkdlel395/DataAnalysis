@@ -1,0 +1,163 @@
+<!-- html의 주석  -->
+<!-- 아래 내용은 이 문서는 html5의 규칙을 따른다, 
+     이 문서는 html로 시작해서 html로 끝난다(루트엘리먼트) 
+     문서작성규칙 표현, html을 처리하는 대표적인 브라우저들은 통상 느슨하게 파싱 -->
+<!DOCTYPE html>
+<html>
+    <!-- html 공식적으로 2개의 자식을 가진다 --> 
+    <head>
+        <!-- 이 부분은 이 문서의 메타 정보(데이터를 설명하는데이터)를 기술한다 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+        <meta charset="utf-8">
+        <title>css selector 연습</title>
+        <!-- 외부에 있는 자원( *.css or *.js, .... )을 포함시킬수 있다 -->
+        <!-- jQuery 자바스크립트 프레임웍 사용:간결하게 js를 사용할수 있다(생산성높다) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <!-- 화면에 보이는 모든 부분을 관장 -->
+        <h1 style="color:red;" class="A">헤드라인</h1>
+        <h1>헤드라인2</h1>
+        <h2 class="A B">헤드라인3</h2>
+        <h3 id="title">헤드라인4</h3>
+        <h3 class="A">헤드라인4-1</h3>
+        <p>문단을 표현</p>
+        <span class="A">글자, 작은사이즈의 글</span>
+        <b>
+            볼드체
+            <span class="A B">작은글2, </span>
+        </b>
+        <!-- 영역(공간) 잡을때 사용(레이아웃용). html4의 흔적 -->
+        <div>
+            프런트요소는?
+            <ul id="front">
+                <li>html5</li>
+                <li>css3</li>
+                <li>javascript</li>
+                <li>
+                    백엔드 개발 기술은?
+                    <ol>
+                        <li>spring boot</li>
+                        <li>nodejs</li>
+                        <li>django/flask</li>
+                    </ol>
+                </li>                
+            </ul>
+        </div>
+        <div>
+            표
+            <table border="1" id="starbucks">
+                <thead>
+                    <!-- 컬럼-->
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 데이터(row)-->
+                    <tr>
+                        <td>1</td>
+                        <td>스타벅스 장충동지점</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>스타벅스 본점</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>스타벅스 리저브 지점</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>스타벅스 DT점</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>스타벅스 미니</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <!-- 단독 태그 -->
+            <input type="text" id="id" name="id" placeholder="힌트:사용자아이디입력"/>
+        </div>
+
+        <!-- js를 작성할 위치를 모른다면 body 태그 닫는 지점 바로 위에서 작성 (문제없음)-->
+        <script>
+            // 모든 요소에 색을 1차로 가미시켜서 오동작을 일단 방지(일시적)
+            $('*').css('color', 'black')
+            // js의 주석, 스크립트는 여기서 작성한다
+            // js/css가 html에 포함되는 방식 external(문서밖에 존재), 
+            // internal(현재작성하는것), inline(html tag에 직접 기술, onclick="call();") 방식 존재
+            
+            // jQuery에서는 $('css selector') 요소를 찾는다(특정한다)
+            // 순수 js에서는 document.querySelector('css selector')
+
+            // css selector 연습 => html  문서내에 특정 요소를 찾는 방법(특정하는 방법)
+            // #1 요소명 : 태그명, a, div, => 모든 div를 다찾아라(복수)
+            //    해석 : 이 문서/데이터(html)에 존재하는 모든  h1요소를 다 찾아라
+            $('h1').css('color', 'blue')
+
+            /*
+                id : #id값, 문서내에서 고유하다
+                class : .클레스값, 문서내에서 여러번 나올수 있다
+                복합 : 요소.클레스값, 요소#아이디값
+                나열 : , 구분 : div, a, #kk, .ss
+                서열 : 한칸 띠우면 후손까지 탐색, > 넣으면 직계까지 탐색
+                    a > div => a요소의 바로 밑에 있는 div를 다 찾아라
+                    a div => a요소 밑에 존재하는 모든 div를 다 찾아라
+                의사결정 : tr:서열 : 서열:first, last, nth-child(1)
+                속성 : [속성명=속성값]
+            */
+            // #2 id : #id값, 문서내에서 고유하다
+            $('#title').css('color', 'pink')
+
+            // #3 class : .클레스값, 문서내에서 여러번 나올수 있다
+            $('.A').css('color', 'green')
+
+            // #4 복합 : 요소.클레스값, 요소#아이디값
+            // class가 A인 요소들중에  span만 빨강색으로 글자처리
+            // 이 문서상에 존재하는 모든 span들 중에서 클레스값이 A인 요소
+            $('span.A').css('color', 'red')
+            // 복잡한 케이스, 클레스를 2개이상 적용할것이면 .클레스.클레스.....             
+            $('span.A.B').css('color', 'gray')
+
+            // #5 나열 : , 구분 : div, a, #kk, .ss
+            $('h1, p, h4.A').css('background', 'yellow')
+
+            // #6 서열 1 : 직계, 부모와 자식관계            
+            $('#front > li').css('color', 'magenta')
+            // #6 서열 2 : 직계 포함 후손, 자손, 손자, 끝까지 싹다 찾아라
+            $('#front li').css('color', 'lightgray')
+
+            // #7 의사결정셀렉터 : 반복된 요소에서 순서등을 활용해서 특정하는 방법
+            // 이 문서상에 존재하는 모든  td 들 중에, 서열이 첫째인 요소
+            // 서열 관계를 같이 넣어서 범위를 좁혀주는게 유리
+            $('#starbucks td:first').css('color', 'blue') // 첫째
+            $('#starbucks td:last').css('color', 'red')   // 막내
+            // 아이디가 starbucks인 요소의 모든 후손들중에  tr만 모아서 그중 서열이 막내인
+            // 요소의 직계자식 중 td들을 모으고, 그중에 첫째를 특정한다
+            $('#starbucks tr:last > td:first').css('background', 'gray')
+
+            // 홀수번째
+            $('#starbucks > tbody > tr:odd').css('background', 'yellow')
+            // 짝수번째
+            $('#starbucks > tbody > tr:even').css('background', 'lightgreen')
+
+            // 상위 탑 3 : lt(3) <-> 하위 3개 : gt(3)
+            $('#starbucks > tbody > tr:lt(3)').css('background', 'pink')
+
+            // 특정 서열 지정 : 0,1,2,...
+            $('#starbucks > tbody > tr:eq(3)').css('background', 'white')
+            // 특정 서열 지정 : 1,2,...  or nth-of-type
+            $('#starbucks > tbody > tr:nth-child(3)').css('background', 'red')
+
+            // #8 속성 : [속성명=속성값]
+            // 주로 input 태그 하고 많이 사용
+            // 이 문서상에 존재하는 모든 input 요소들 중에 name 속성이 id인 요소
+            $('input[name=id]').val('아이디값 자동으로 넣었다')
+        </script>
+    </body>
+</html>
